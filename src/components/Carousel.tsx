@@ -178,7 +178,6 @@ export default function Carousel({
       }`}
       style={{
         width: `${baseWidth}px`,
-        // Updated style to use baseHeight
         height: round ? `${baseWidth}px` : baseHeight,
       }}
     >
