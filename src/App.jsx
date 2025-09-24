@@ -43,19 +43,28 @@ export default function App() {
         className="min-h-screen flex flex-col items-center justify-center px-6"
       >
         <h2 className="text-3xl font-bold mb-6">Works</h2>
-        <div className="space-y-6 w-full max-w-xl">
+        <div className="flex flex-col space-y-6 w-full max-w-xl">
           <iframe
-            className="w-full h-60 rounded-xl"
+            className="flex w-full h-60 rounded-xl"
             src="https://open.spotify.com/embed/track/your-track-id"
             allow="encrypted-media"
           />
           <iframe
-            className="w-full h-60 rounded-xl"
+            className="flex w-full h-60 rounded-xl"
             src="https://www.youtube.com/embed/d3JBr5WQ1MQ?si=RqpPkdQbRK4hX96s"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
+          />
+          <Carousel
+            baseWidth={575}
+            baseHeight={250}
+            autoplay={true}
+            autoplayDelay={3000}
+            pauseOnHover={true}
+            loop={true}
+            round={false}
           />
         </div>
       </section>
@@ -66,17 +75,7 @@ export default function App() {
         className="min-h-screen flex flex-col items-center justify-center px-6"
       >
         <h2 className="text-3xl font-bold mb-6">Gallery</h2>
-        <div style={{ height: "600px", position: "relative" }}>
-          <Carousel
-            baseWidth={1200}
-            baseHeight={400}
-            autoplay={true}
-            autoplayDelay={3000}
-            pauseOnHover={true}
-            loop={true}
-            round={false}
-          />
-        </div>
+        <div style={{ height: "600px", position: "relative" }}>BLA BLA</div>
       </section>
 
       {/* Contact */}
