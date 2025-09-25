@@ -15,7 +15,7 @@ export default function App() {
         <a href="#about" className="hover:text-purple-400">
           About
         </a>
-        <a href="#discography" className="hover:opacity-50">
+        <a href="#works" className="hover:opacity-50">
           Works
         </a>
         <a href="#gallery" className="hover:text-purple-400">
@@ -37,9 +37,9 @@ export default function App() {
         </p>
       </section>
 
-      {/* Discography */}
+      {/* Works */}
       <section
-        id="discography"
+        id="works"
         className="min-h-screen flex flex-col items-center justify-center px-6"
       >
         <h2 className="text-3xl font-bold mb-6">Works</h2>
