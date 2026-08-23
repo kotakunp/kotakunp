@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "kotakunp — 静かな時間のための音楽",
+    "description": "kotakunpによるVocaloid音楽、歌詞、そして小さな音の世界。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "about": "紹介",
+    "music": "音楽",
+    "projects": "プロジェクト",
+    "journal": "記録",
+    "contact": "連絡",
+    "reachOut": "交流"
+  },
+  "home": {
+    "role": "Vocaloid音楽プロデューサー、ソフトウェア開発者。",
+    "line1": "静けさの中に生きる歌を作る。",
+    "line2": "アイデアを形にする道具を作る。",
+    "about": "紹介",
+    "aboutText": "kotakunpはVocaloid音楽プロデューサー兼ソフトウェア開発者です。合成音声による感情的でメロディックな音楽と、創作を支える軽量なツールを制作しています。",
+    "learnMore": "もっと知る",
+    "viewMusic": "音楽をすべて見る",
+    "viewProjects": "プロジェクトをすべて見る"
+  },
+  "musicPage": {
+    "title": "音楽",
+    "intro": "kotakunpによるVocaloid作品。\nメロディ、言葉、そしてコード。",
+    "latest": "最新リリース",
+    "latestNote": "雨の匂いと街の記憶。淡く透明なバラード。",
+    "listen": "聴く",
+    "lyrics": "歌詞",
+    "tracklist": "トラックリスト",
+    "allTracks": "全曲を見る",
+    "discography": "ディスコグラフィー",
+    "stay": "最新情報",
+    "updates": "新しい音楽とプロジェクトのお知らせ。",
+    "email": "メールアドレス",
+    "work": "連絡 / 仕事",
+    "workNote": "仕事、コラボレーションなど。",
+    "newest": "新着順",
+    "newsletterSend": "登録",
+    "newsletterSuccess": "登録ありがとうございます。",
+    "newsletterError": "登録できませんでした。もう一度お試しください。",
+    "newsletterSending": "送信中…"
+  },
+  "projectsPage": {
+    "title": "プロジェクト",
+    "intro": "音楽とその先のためのオープンソースツール、クリエイティブコーディング、開発ユーティリティ。",
+    "note": "音楽制作と創造的なワークフローを支える道具を作る。",
+    "featured": "注目",
+    "description": "ライブコーディング、音楽ツール、素早い試作のための軽量スクリプト言語とランタイム。",
+    "caseStudy": "事例を読む",
+    "all": "すべて",
+    "tools": "ツール",
+    "libraries": "ライブラリ",
+    "plugins": "プラグイン",
+    "experiments": "実験",
+    "utilities": "ユーティリティ",
+    "count": "8 プロジェクト"
+  },
+  "aboutPage": {
+    "title": "紹介",
+    "bio": "プロフィール",
+    "bioText": "kotakunpはVocaloid音楽プロデューサー兼ソフトウェア開発者です。合成音声と感情、コードと創造性を結びつけ、表現を促す歌と道具を作っています。",
+    "philosophy": "考え方",
+    "philosophyText": "音とコードの静かな力を信じています。技術は手段で、感情が目的。意図を持って作り、好奇心を持って磨き、つながるために共有します。",
+    "skills": "ツールとスキル",
+    "experience": "経歴",
+    "contact": "連絡先"
+  },
+  "contactPage": {
+    "title": "交流",
+    "intro": "アーティストとリスナーの間にある公開スペース。",
+    "note": "思ったこと、記憶、あるいは一言だけでも。ここに残したメッセージは誰でも読むことができます。"
+  },
+  "journalPage": {
+    "title": "記録",
+    "intro": "歌と歌の間にあるノート。",
+    "note": "制作、発見、リスニングルームに残した未完成の思い。",
+    "latest": "最新の記録",
+    "entries": "件",
+    "all": "すべて",
+    "empty": "まだ何もありません。",
+    "read": "読む"
+  },
+  "reachOut": {
+    "label": "交流",
+    "title": "言葉を残してください。",
+    "description": "思い、物語、心に届いた曲について共有してください。投稿は公開されます。",
+    "name": "名前・ニックネーム",
+    "namePlaceholder": "匿名でも大丈夫です",
+    "message": "メッセージ",
+    "messagePlaceholder": "ここに残したいことを書く…",
+    "send": "メッセージを残す",
+    "sending": "送信中…",
+    "success": "メッセージがウォールに追加されました。",
+    "error": "投稿できませんでした。もう一度お試しください。",
+    "empty": "まだ静かなウォールです。最初の一人になれます。",
+    "publicNote": "公開ウォール / 思いやりを",
+    "prototypeNote": "現在はサーバーに保存されます。本番公開前に永続ストレージへ接続してください。"
+  },
+  "footer": {
+    "note": "音楽、言葉、静かな信号。",
+    "soon": "近日公開"
+  }
+}

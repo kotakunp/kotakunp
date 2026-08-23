@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kotakunp
 
-## Getting Started
+A multilingual music and artist website built with Next.js. English, Japanese,
+and Mongolian copy lives in `src/messages` so it can be edited without touching
+the page components.
 
-First, run the development server:
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The root redirects to
+`/en`; `/ja` and `/mn` contain the other language drafts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Set `NEXT_PUBLIC_SITE_URL` to the production origin before deployment so the
+sitemap and social metadata use the correct URL.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Public message wall
 
-## Learn More
+The reach-out wall is functional in a persistent Node.js deployment and stores
+messages in `data/reach-out.ndjson`. A serverless filesystem such as Vercel's is
+ephemeral, so replace the route's file storage with a durable database before a
+serverless launch. Public posting also needs moderation and stronger rate
+limiting before the site is widely shared.
 
-To learn more about Next.js, take a look at the following resources:
+## Content backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The journal and discography are served from SQLite (`data/content.sqlite`) managed through `/studio`.
+See `docs/content-operations.md` for provisioning, backups, restore drills, and the publish workflow.

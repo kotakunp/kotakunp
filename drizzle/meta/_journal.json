@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1787311048486,
+      "tag": "0000_stiff_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787326716610,
+      "tag": "0001_import_legacy_content",
+      "breakpoints": true
+    }
+  ]
+}

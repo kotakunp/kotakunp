@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "kotakunp — music for the quiet hours",
+    "description": "Vocaloid music, lyrics, and small worlds in sound by kotakunp."
+  },
+  "nav": {
+    "home": "home",
+    "about": "about",
+    "music": "music",
+    "projects": "projects",
+    "journal": "journal",
+    "contact": "contact",
+    "reachOut": "reach out"
+  },
+  "home": {
+    "role": "Vocaloid music producer and software developer.",
+    "line1": "Creating songs that live in the quiet.",
+    "line2": "Building tools that help ideas take shape.",
+    "about": "about",
+    "aboutText": "kotakunp is a Vocaloid music producer and software developer. I make emotional, melodic music with synthetic voices and build lightweight tools that support creative workflows.",
+    "learnMore": "Learn more about me",
+    "viewMusic": "view all music",
+    "viewProjects": "view all projects"
+  },
+  "musicPage": {
+    "title": "music",
+    "intro": "Vocaloid works by kotakunp.\nmelody, words, and code.",
+    "latest": "latest release",
+    "latestNote": "The smell of rain and the memory of a city. A pale, transparent ballad.",
+    "listen": "listen",
+    "lyrics": "lyrics",
+    "tracklist": "tracklist",
+    "allTracks": "view all tracks",
+    "discography": "discography",
+    "stay": "stay in the loop",
+    "updates": "updates on new music and projects.",
+    "email": "email address",
+    "work": "contact / work",
+    "workNote": "business inquiries, collaborations, and more.",
+    "newest": "newest",
+    "newsletterSend": "subscribe",
+    "newsletterSuccess": "You're on the list. Thank you.",
+    "newsletterError": "Could not subscribe. Try again.",
+    "newsletterSending": "subscribing…"
+  },
+  "projectsPage": {
+    "title": "projects",
+    "intro": "Open-source tools, creative coding experiments, and developer utilities for music and beyond.",
+    "note": "Building tools that empower music production and creative workflows.",
+    "featured": "featured",
+    "description": "A fast, minimal scripting language and runtime designed for live coding, music tools, and prototyping ideas quickly.",
+    "caseStudy": "read case study",
+    "all": "all",
+    "tools": "tools",
+    "libraries": "libraries",
+    "plugins": "plugins",
+    "experiments": "experiments",
+    "utilities": "utilities",
+    "count": "8 projects"
+  },
+  "aboutPage": {
+    "title": "about",
+    "bio": "bio",
+    "bioText": "kotakunp is a Vocaloid music producer and software developer. Blending synthetic voices with emotion, code with creativity. Building songs and tools that inspire expression.",
+    "philosophy": "philosophy",
+    "philosophyText": "I believe in the quiet power of sound and code. Technology is a means—emotion is the purpose. I create with intention, iterate with curiosity, and share to connect.",
+    "skills": "tools & skills",
+    "experience": "experience",
+    "contact": "contact"
+  },
+  "contactPage": {
+    "title": "reach out",
+    "intro": "A public space between artist and listener.",
+    "note": "Write a thought, a memory, or simply say hello. Messages shared here can be read by everyone."
+  },
+  "journalPage": {
+    "title": "journal",
+    "intro": "Notes from the space between songs.",
+    "note": "Process, small discoveries, and unfinished thoughts from the listening room.",
+    "latest": "latest notes",
+    "entries": "entries",
+    "all": "all",
+    "empty": "Nothing here yet.",
+    "read": "read note"
+  },
+  "reachOut": {
+    "label": "reach out",
+    "title": "Leave something behind.",
+    "description": "Share a thought, a story, or the song that found you at the right time. Messages posted here are public.",
+    "name": "name or nickname",
+    "namePlaceholder": "anonymous is okay",
+    "message": "message",
+    "messagePlaceholder": "write what you want to leave here…",
+    "send": "leave a message",
+    "sending": "leaving your message…",
+    "success": "Your message is now on the wall.",
+    "error": "The message could not be posted. Try again.",
+    "empty": "The wall is quiet for now. You can be the first.",
+    "publicNote": "public wall / be kind",
+    "prototypeNote": "Messages are stored by this server. Connect durable storage before a serverless launch."
+  },
+  "footer": {
+    "note": "music, words, and quiet signals.",
+    "soon": "soon"
+  }
+}
