@@ -41,12 +41,12 @@ export function JournalMarkdown({
   mediaMap,
 }: {
   markdown: string;
-  mediaMap: Map<string, MediaEntry>;
+  mediaMap?: Map<string, MediaEntry>;
 }) {
   const { text, tokens } = preprocess(markdown);
 
   function resolveAudio(id: string): string | null {
-    return mediaMap.get(id)?.publicPath ?? null;
+    return mediaMap?.get(id)?.publicPath ?? null;
   }
 
   function Paragraph({ children }: { children?: ReactNode }) {

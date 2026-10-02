@@ -9,7 +9,6 @@ import type { Db } from "@/db/client";
 import { openContentDatabase } from "@/db/client";
 import { applyMigrations } from "@/db/migrate";
 import * as schema from "@/db/schema";
-import { JournalRepository } from "@/lib/journal/repository";
 import { MusicRepository } from "@/lib/music/repository";
 
 function makeDb(prefix: string): { tempDir: string; sqlite: Database.Database; db: Db } {
@@ -20,144 +19,11 @@ function makeDb(prefix: string): { tempDir: string; sqlite: Database.Database; d
   applyMigrations(sqlite);
   const db = drizzle(sqlite, { schema });
   // Structural migrations also import legacy content; tests need an empty DB.
-  for (const table of [
-    schema.musicTracks,
-    schema.musicReleases,
-    schema.journalPostTags,
-    schema.journalPostMedia,
-    schema.journalPosts,
-    schema.tags,
-    schema.media,
-  ]) {
+  for (const table of [schema.musicTracks, schema.musicReleases, schema.media]) {
     db.delete(table).run();
   }
   return { tempDir, sqlite, db };
 }
-
-async function insertImageMedia(db: Db, id: string): Promise<void> {
-  await db.insert(schema.media).values({
-    id,
-    kind: "image",
-    originalName: `${id}.png`,
-    storageKey: `images/${id}.png`,
-    publicPath: `/media/${id}/${id}.png`,
-    mimeType: "image/png",
-    byteSize: 10,
-    alt: `Alt for ${id}`,
-    source: "upload",
-    createdAt: new Date(),
-  });
-}
-
-describe("journal repository", () => {
-  let tempDir: string;
-  let sqlite: Database.Database;
-  let db: Db;
-  let repo: JournalRepository;
-
-  beforeEach(() => {
-    ({ tempDir, sqlite, db } = makeDb("kotakunp-journal-"));
-    repo = new JournalRepository(db);
-  });
-
-  afterEach(() => {
-    sqlite.close();
-    fs.rmSync(tempDir, { recursive: true, force: true });
-  });
-
-  it("creates drafts with defaults and enforces unique slugs", async () => {
-    const created = await repo.createPost({ slug: "rain-notes", title: "Rain notes" });
-    expect(created.status).toBe("draft");
-    expect(created.excerpt).toBe("");
-    expect(created.bodyMarkdown).toBe("");
-    expect(created.createdAt).toBeInstanceOf(Date);
-
-    await expect(
-      repo.createPost({ slug: "rain-notes", title: "Again" }),
-    ).rejects.toMatchObject({ code: "SQLITE_CONSTRAINT_UNIQUE" });
-  });
-
-  it("cascades tag and media join rows when a post is deleted", async () => {
-    await insertImageMedia(db, "m-cover");
-    const post = await repo.createPost({ slug: "cascade-post", title: "Cascade" });
-    await repo.syncPostTags(post.id, [
-      { name: "Release", slug: "release" },
-      { name: "Process", slug: "process" },
-    ]);
-    await repo.syncPostMedia(post.id, ["m-cover"]);
-
-    expect(await repo.listTagsForPost(post.id)).toHaveLength(2);
-    expect(await repo.listMediaIdsForPost(post.id)).toEqual(["m-cover"]);
-
-    await repo.deletePost(post.id);
-
-    expect(
-      (sqlite.prepare("SELECT COUNT(*) c FROM journal_post_tags").get() as { c: number }).c,
-    ).toBe(0);
-    expect(
-      (sqlite.prepare("SELECT COUNT(*) c FROM journal_post_media").get() as { c: number })
-        .c,
-    ).toBe(0);
-    // Tag rows themselves are independent content and are not cascaded away.
-    expect(await repo.getTagBySlug("release")).not.toBeNull();
-    expect(await repo.getPostById(post.id)).toBeNull();
-  });
-
-  it("sets cover to null when the cover media row is deleted", async () => {
-    await insertImageMedia(db, "m-del");
-    const post = await repo.createPost({
-      slug: "cover-post",
-      title: "Cover",
-      coverMediaId: "m-del",
-    });
-    expect(post.coverMediaId).toBe("m-del");
-
-    await db.delete(schema.media).where(eq(schema.media.id, "m-del"));
-    const reloaded = await repo.getPostById(post.id);
-    expect(reloaded?.coverMediaId).toBeNull();
-  });
-
-  it("filters draft versus published posts", async () => {
-    await repo.createPost({
-      slug: "published-a",
-      title: "A",
-      status: "published",
-      publishedAt: new Date("2026-01-02T00:00:00Z"),
-    });
-    await repo.createPost({
-      slug: "published-b",
-      title: "B",
-      status: "published",
-      publishedAt: new Date("2026-03-01T00:00:00Z"),
-    });
-    await repo.createPost({ slug: "secret-draft", title: "Draft" });
-
-    const published = await repo.listPosts({ status: "published" });
-    expect(published.map((post) => post.slug)).toEqual(["published-b", "published-a"]);
-    const drafts = await repo.listPosts({ status: "draft" });
-    expect(drafts.map((post) => post.slug)).toEqual(["secret-draft"]);
-    expect(await repo.listPosts()).toHaveLength(3);
-  });
-
-  it("upserts tags by slug and syncs joins without duplicates", async () => {
-    const post = await repo.createPost({ slug: "tagged", title: "Tagged" });
-    await repo.syncPostTags(post.id, [{ name: "Site", slug: "site" }]);
-    await repo.syncPostTags(post.id, [
-      { name: "Site", slug: "site" },
-      { name: "Studio note", slug: "studio-note" },
-    ]);
-    const joined = await repo.listTagsForPost(post.id);
-    expect(joined.map((tag) => tag.slug).sort()).toEqual(["site", "studio-note"]);
-
-    await repo.syncPostTags(post.id, [{ name: "Site renamed", slug: "site" }]);
-    expect((await db.select().from(schema.tags)).map((tag) => tag.slug).sort()).toEqual([
-      "site",
-      "studio-note",
-    ]);
-    expect((await repo.getTagBySlug("site"))?.name).toBe("Site renamed");
-    expect(await repo.listTagsForPost(post.id)).toHaveLength(1);
-  });
-});
 
 describe("music repository", () => {
   let tempDir: string;

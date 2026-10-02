@@ -343,15 +343,6 @@ export async function listPublishedReleases(
   return cached();
 }
 
-export async function getLatestPublishedRelease(): Promise<PublishedReleaseView | null> {
-  const cached = unstable_cache(
-    async () => (await listPublishedReleasesQuery(getDb()))[0] ?? null,
-    ["music", "latest"],
-    { tags: [MUSIC_CACHE_TAG], revalidate: MUSIC_REVALIDATE_SECONDS },
-  );
-  return cached();
-}
-
 export async function getPublishedRelease(
   slug: string,
 ): Promise<PublishedReleaseView | null> {

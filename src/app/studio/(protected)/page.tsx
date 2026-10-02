@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { getDb } from "@/db/client";
-import { JournalRepository } from "@/lib/journal/repository";
 import { MusicRepository } from "@/lib/music/repository";
 
 export const dynamic = "force-dynamic";
 
 export default async function StudioDashboard() {
   const db = getDb();
-  const posts = await new JournalRepository(db).listPosts();
   const releases = await new MusicRepository(db).listReleases();
 
   return (
@@ -19,22 +17,6 @@ export default async function StudioDashboard() {
           <a href="/" target="_blank" rel="noreferrer">view site ↗</a>
         </nav>
       </header>
-
-      <section className="studio-section">
-        <div className="studio-section-head">
-          <h2>Writing</h2>
-          <Link className="studio-new" href="/studio/posts/new">new post</Link>
-        </div>
-        {posts.map((post) => (
-          <Link key={post.id} className="studio-row" href={`/studio/posts/${post.id}`}>
-            <strong>{post.title}</strong>
-            <span className={post.status === "published" ? "studio-status published" : "studio-status"}>
-              {post.status}
-            </span>
-            <time>{post.updatedAt.toISOString().slice(0, 10)}</time>
-          </Link>
-        ))}
-      </section>
 
       <section className="studio-section">
         <div className="studio-section-head">

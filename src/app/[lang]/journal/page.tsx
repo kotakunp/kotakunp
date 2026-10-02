@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { HeroVisual } from "@/components/hero-visual";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { listPublishedPosts, listPublishedTags } from "@/lib/journal/queries";
+import { listJournalPosts, listJournalTags } from "@/content/journal";
 import { getDictionary, isLocale } from "../dictionaries";
 
 type JournalIndexProps = PageProps<"/[lang]/journal">;
@@ -16,7 +16,7 @@ export default async function JournalPage({ params, searchParams }: JournalIndex
   const { tag } = await searchParams;
 
   const tagSlug = typeof tag === "string" && tag.length > 0 ? tag : undefined;
-  const [posts, tags] = await Promise.all([listPublishedPosts(tagSlug), listPublishedTags()]);
+  const [posts, tags] = [listJournalPosts(tagSlug), listJournalTags()];
   const [featured, ...rest] = posts;
   const activeTag = tagSlug ?? null;
 
@@ -80,7 +80,7 @@ export default async function JournalPage({ params, searchParams }: JournalIndex
             ) : null}
             <div className="journal-grid">
               {rest.map((post) => (
-                <Link key={post.id} className="journal-card" href={`/${lang}/journal/${post.slug}`}>
+                <Link key={post.slug} className="journal-card" href={`/${lang}/journal/${post.slug}`}>
                   <div className="journal-cover">
                     {post.coverPath ? (
                       <Image src={post.coverPath} alt={post.coverAlt ?? ""} fill sizes="(max-width: 720px) 50vw, 260px" />

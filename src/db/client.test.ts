@@ -14,15 +14,7 @@ import {
   MIGRATIONS_FOLDER,
 } from "@/db/migrate";
 
-const EXPECTED_TABLES = [
-  "media",
-  "journal_posts",
-  "tags",
-  "journal_post_tags",
-  "journal_post_media",
-  "music_releases",
-  "music_tracks",
-];
+const EXPECTED_TABLES = ["media", "music_releases", "music_tracks"];
 
 function listTables(sqlite: ReturnType<typeof getSqliteHandle>): string[] {
   return sqlite

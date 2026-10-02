@@ -7,7 +7,6 @@ const dictionaries = {
 };
 
 export type Locale = keyof typeof dictionaries;
-export type Dictionary = Awaited<ReturnType<(typeof dictionaries)["en"]>>;
 
 export const locales = Object.keys(dictionaries) as Locale[];
 

@@ -3,10 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getPublishedPost, getAdjacentPublishedPosts } from "@/lib/journal/queries";
-import { getDb } from "@/db/client";
-import * as schema from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { getAdjacentJournalPosts, getJournalPost } from "@/content/journal";
 import { getDictionary, isLocale } from "../../dictionaries";
 import { JournalMarkdown } from "@/components/journal-markdown";
 
@@ -14,24 +11,10 @@ export const dynamicParams = true;
 
 type JournalRouteProps = PageProps<"/[lang]/journal/[slug]">;
 
-function resolveMediaMap(postId: string): Map<string, { publicPath: string; kind: "image" | "audio" }> {
-  const rows = getDb()
-    .select({
-      id: schema.media.id,
-      publicPath: schema.media.publicPath,
-      kind: schema.media.kind,
-    })
-    .from(schema.journalPostMedia)
-    .innerJoin(schema.media, eq(schema.journalPostMedia.mediaId, schema.media.id))
-    .where(eq(schema.journalPostMedia.postId, postId))
-    .all();
-  return new Map(rows.map((row) => [row.id, { publicPath: row.publicPath, kind: row.kind as "image" | "audio" }]));
-}
-
 export async function generateMetadata({ params }: JournalRouteProps): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!isLocale(lang)) return {};
-  const post = await getPublishedPost(slug);
+  const post = getJournalPost(slug);
   if (!post) return {};
   return {
     title: `${post.title} — kotakunp`,
@@ -39,16 +22,14 @@ export async function generateMetadata({ params }: JournalRouteProps): Promise<M
   };
 }
 
-
 export default async function JournalPostPage({ params }: JournalRouteProps) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
-  const post = await getPublishedPost(slug);
+  const post = getJournalPost(slug);
   if (!post) notFound();
   const copy = await getDictionary(lang);
 
-  const adjacent = await getAdjacentPublishedPosts(post.publishedAt, post.id);
-  const mediaMap = resolveMediaMap(post.id);
+  const adjacent = getAdjacentJournalPosts(slug);
 
   return (
     <main id="top">
@@ -62,7 +43,7 @@ export default async function JournalPostPage({ params }: JournalRouteProps) {
             {post.publishedAt.slice(0, 10)} · {post.readingTimeMinutes} min
           </small>
         </header>
-        <JournalMarkdown markdown={post.bodyMarkdown} mediaMap={mediaMap} />
+        <JournalMarkdown markdown={post.bodyMarkdown} />
         {post.tags.length > 0 ? (
           <nav className="tags journal-tags" aria-label="Tags">
             {post.tags.map((tag) => (
@@ -81,7 +62,9 @@ export default async function JournalPostPage({ params }: JournalRouteProps) {
             <span />
           )}
           {adjacent.next ? (
-            <Link href={`/${lang}/journal/${adjacent.next.slug}`}>{adjacent.next.title} →</Link>
+            <Link href={`/${lang}/journal/${adjacent.next.slug}`}>
+              {adjacent.next.title} →
+            </Link>
           ) : (
             <span />
           )}

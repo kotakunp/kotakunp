@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { listPublishedPosts } from "@/lib/journal/queries";
+import { listJournalPosts } from "@/content/journal";
 import { listPublishedReleases } from "@/lib/music/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -7,7 +7,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = ["", "/about", "/music", "/projects", "/journal", "/contact"];
   const locales = ["en", "ja", "mn"];
 
-  const [posts, releases] = await Promise.all([listPublishedPosts(), listPublishedReleases()]);
+  const releases = await listPublishedReleases();
+  const posts = listJournalPosts();
 
   return locales.flatMap((locale) => {
     const pageUrls: MetadataRoute.Sitemap = pages.map((page) => ({
@@ -17,8 +18,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: page === "" ? (locale === "en" ? 1 : 0.8) : 0.7,
     }));
     const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-      url: `${baseUrl}/en/journal/${post.slug}`,
-      lastModified: new Date(post.updatedAt),
+      url: `${baseUrl}/${locale}/journal/${post.slug}`,
+      lastModified: new Date(post.publishedAt),
       changeFrequency: "monthly",
       priority: 0.6,
     }));

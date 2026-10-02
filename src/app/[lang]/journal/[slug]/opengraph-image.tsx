@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { notFound } from "next/navigation";
-import { listPublishedPosts } from "@/lib/journal/queries";
+import { getJournalPost } from "@/content/journal";
 import { OgCard, ogSize } from "@/lib/og-card";
 
 export const size = ogSize;
@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = (await listPublishedPosts()).find((candidate) => candidate.slug === slug);
+  const post = getJournalPost(slug);
   if (!post) notFound();
   const sub =
     post.excerpt.length > 90

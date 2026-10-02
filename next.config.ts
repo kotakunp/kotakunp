@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   experimental: { globalNotFound: true },
   serverExternalPackages: ["better-sqlite3", "file-type", "music-metadata"],
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async redirects() {
     return [
       {

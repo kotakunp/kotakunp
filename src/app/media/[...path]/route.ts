@@ -13,18 +13,6 @@ type RouteContext = { params: Promise<{ path: string[] }> };
 
 async function isPubliclyVisible(mediaId: string): Promise<boolean> {
   const db = getDb();
-  const postCover = await db
-    .select({ id: schema.journalPosts.id })
-    .from(schema.journalPosts)
-    .where(
-      and(
-        eq(schema.journalPosts.coverMediaId, mediaId),
-        eq(schema.journalPosts.status, "published"),
-      ),
-    )
-    .limit(1);
-  if (postCover.length > 0) return true;
-
   const releaseCover = await db
     .select({ id: schema.musicReleases.id })
     .from(schema.musicReleases)
@@ -51,23 +39,7 @@ async function isPubliclyVisible(mediaId: string): Promise<boolean> {
       ),
     )
     .limit(1);
-  if (trackAudio.length > 0) return true;
-
-  const postBody = await db
-    .select({ id: schema.journalPosts.id })
-    .from(schema.journalPostMedia)
-    .innerJoin(
-      schema.journalPosts,
-      eq(schema.journalPostMedia.postId, schema.journalPosts.id),
-    )
-    .where(
-      and(
-        eq(schema.journalPostMedia.mediaId, mediaId),
-        eq(schema.journalPosts.status, "published"),
-      ),
-    )
-    .limit(1);
-  return postBody.length > 0;
+  return trackAudio.length > 0;
 }
 
 function parseSingleRange(header: string, byteSize: number): { start: number; end: number } | "invalid" | null {

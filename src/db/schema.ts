@@ -1,4 +1,4 @@
-import { integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const media = sqliteTable("media", {
   id: text("id").primaryKey(),
@@ -15,54 +15,6 @@ export const media = sqliteTable("media", {
   source: text("source", { enum: ["upload", "bundled"] }).notNull(),
   createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
 });
-
-export const journalPosts = sqliteTable("journal_posts", {
-  id: text("id").primaryKey(),
-  slug: text("slug").notNull().unique(),
-  title: text("title").notNull(),
-  excerpt: text("excerpt").notNull().default(""),
-  type: text("type").notNull().default(""),
-  bodyMarkdown: text("body_markdown").notNull().default(""),
-  status: text("status", { enum: ["draft", "published"] }).notNull().default("draft"),
-  coverMediaId: text("cover_media_id").references(() => media.id, {
-    onDelete: "set null",
-  }),
-  publishedAt: integer("published_at", { mode: "timestamp_ms" }),
-  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
-});
-
-export const tags = sqliteTable("tags", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  slug: text("slug").notNull().unique(),
-});
-
-export const journalPostTags = sqliteTable(
-  "journal_post_tags",
-  {
-    postId: text("post_id")
-      .notNull()
-      .references(() => journalPosts.id, { onDelete: "cascade" }),
-    tagId: text("tag_id")
-      .notNull()
-      .references(() => tags.id, { onDelete: "cascade" }),
-  },
-  (table) => [primaryKey({ columns: [table.postId, table.tagId] })],
-);
-
-export const journalPostMedia = sqliteTable(
-  "journal_post_media",
-  {
-    postId: text("post_id")
-      .notNull()
-      .references(() => journalPosts.id, { onDelete: "cascade" }),
-    mediaId: text("media_id")
-      .notNull()
-      .references(() => media.id, { onDelete: "cascade" }),
-  },
-  (table) => [primaryKey({ columns: [table.postId, table.mediaId] })],
-);
 
 export const musicReleases = sqliteTable("music_releases", {
   id: text("id").primaryKey(),

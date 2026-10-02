@@ -1,10 +1,10 @@
-import { listPublishedPosts } from "@/lib/journal/queries";
+import { listJournalPosts } from "@/content/journal";
 import { rssItem } from "@/lib/rss";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export async function GET() {
-  const posts = await listPublishedPosts();
+  const posts = listJournalPosts();
   const items = posts
     .map((post) =>
       rssItem({

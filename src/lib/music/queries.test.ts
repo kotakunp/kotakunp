@@ -23,15 +23,7 @@ function makeDb(prefix: string): { tempDir: string; sqlite: Database.Database; d
   applyMigrations(sqlite);
   const db = drizzle(sqlite, { schema });
   // Structural migrations also import legacy content; tests need an empty DB.
-  for (const table of [
-    schema.musicTracks,
-    schema.musicReleases,
-    schema.journalPostTags,
-    schema.journalPostMedia,
-    schema.journalPosts,
-    schema.tags,
-    schema.media,
-  ]) {
+  for (const table of [schema.musicTracks, schema.musicReleases, schema.media]) {
     db.delete(table).run();
   }
   return { tempDir, sqlite, db };

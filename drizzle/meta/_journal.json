@@ -15,6 +15,13 @@
       "when": 1787326716610,
       "tag": "0001_import_legacy_content",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1787330000000,
+      "tag": "0002_drop_journal_tables",
+      "breakpoints": true
     }
   ]
 }
